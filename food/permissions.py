@@ -1,0 +1,10 @@
+from rest_framework import permissions
+
+
+def has_object_permissions(self, request, view, obj):
+    if request.method in permissions.SAFE_METHODS:
+        return True
+    if obj.owner is None:
+        return True
+
+    return obj.owner == request.user
